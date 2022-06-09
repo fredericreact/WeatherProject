@@ -4,7 +4,7 @@ const app = express();
 
 app.get("/", function(req,res){
 
-const url = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=935335d81af45262ce48fc472c52fbc5&units=metric"
+const url = "https://api.openweathermap.org/data/2.5/weather?q=Madrid&appid=935335d81af45262ce48fc472c52fbc5&units=metric"
 
   https.get(url,function (response){
 
@@ -15,13 +15,22 @@ const url = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=9353
 
       const temp = weatherData.main.temp
       const description = weatherData.weather[0].description
+      const icon =weatherData.weather[0].icon
+      const imageURL = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
+
       console.log(temp);
       console.log(description);
+      console.log(icon);
 
+
+      // res.write a la place de res.send car on ne peut avoir qu'un seul res.send
+      res.write("<p>"+description+"</p>");
+      res.write("<h1>The temperature is: "+temp+"</h1>");
+      res.write("<img src=" + imageURL + ">")
+      res.send()
     })
   })
 
-  res.send("Hello");
 });
 
 
